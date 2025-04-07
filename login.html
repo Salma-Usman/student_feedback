@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
+
+            <!-- Remember Me and Forgot Password -->
+            <div class="options">
+                <div class="remember-me">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember Me</label>
+                </div>
+                <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="register.html">Register here</a></p>
+    </div>
+    <footer>
+        <p>&copy; <span id="year"></span> Course Feedback System. All rights reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("rememberedEmail")) {
+                document.getElementById("email").value = localStorage.getItem("rememberedEmail");
+                document.getElementById("rememberMe").checked = true;
+            }
+
+            document.getElementById("loginForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const rememberMe = document.getElementById("rememberMe").checked;
+
+                if (email && password) {
+                    if (rememberMe) {
+                        localStorage.setItem("rememberedEmail", email);
+                    } else {
+                        localStorage.removeItem("rememberedEmail");
+                    }
+
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert("Please enter valid credentials!");
+                }
+            });
+        });
+        // Set current year dynamically
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+    </script>
+</body>
+
+</html>

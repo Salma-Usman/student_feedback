@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="top-nav">
+        <div class="menu-icon" onclick="toggleSidebar()"> &#9776;</div>
+        <div class="logo">
+            <div class="logo-icon">CF</div>
+            <div class="logo-text">Course<span>Feedback</span></div>
+        </div>
+        <div class="top-links">
+            <a href="dashboard.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="login.html">Login</a>
+        </div>
+
+        <div class="user-menu">
+            <span id="Username">Username</span>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <a href="dashboard.html">Home</a>
+        <a href="feedback.html">Give Feedback</a>
+        <a href="profile.html">Profile</a>
+        <a href="login.html">Login</a>
+        <a href="about.html">About</a>
+
+    </div>
+
+    <!-- Dashboard Content -->
+    <section class="part1">
+        <h1>Welcome to the Course Feedback System</h1>
+        <div class="Notes">
+            <p> <strong>General Notes:</strong>
+            <ul>
+                <li>Your feedback helps improve course content and teaching methods.</li>
+                <li>Be honest and constructive to enhance learning experiences for future students.</li>
+                <li>All responses remain confidential and are used solely for academic improvements.</li>
+                <li>Your opinions matter! Share your thoughts on course materials, instructor effectiveness,<br> and
+                    overall
+                    experience.</li>
+                <li>Provide specific examples when possible to help us understand your concerns and suggestions.
+                </li>
+            </ul>
+
+
+            </p>
+        </div>
+    </section>
+    <div class="dashboard-content">
+        <div class="image-section">
+            <p>Our system helps analyze student feedback to enhance the learning experience.</p>
+            <img src="dashboard img1.jpeg" alt="Dashboard Image">
+        </div>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="summary">
+        <div class="card">
+            <h2>Total Evaluations</h2>
+            <p id="totalEvaluations">0%</p>
+        </div>
+        <div class="card">
+            <h2>Average Course Rating</h2>
+            <p id="avgCourseRating">0%</p>
+        </div>
+        <div class="card">
+            <h2>Average Instructor Rating</h2>
+            <p id="avgInstructorRating">0%</p>
+        </div>
+        <div class="card">
+            <h2>Participation Rate</h2>
+            <p id="participationRate">0%</p>
+        </div>
+    </div>
+    <div class="conclusion">
+        <p>
+            Your Feedback is valuable! It helps improve teaching quality,<br> course content, and overall learning
+            experience.<br>
+            Please provide honest and constructive feedback to help<br> shape better courses for future students.<br>
+            Thank you for your participation!
+        </p>
+    </div>
+    <div class="feedbackbutton">
+        <button id="feedbackBtn">Give Feedback</button>
+    </div>
+    <footer>
+        <p>&copy; <span id="year"></span> Course Feedback System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar =
+                document.getElementById("sidebar");
+            sidebar.classList.toggle("active")
+        }
+        function logout() {
+            window.location.href = "login.html";
+        }
+        // Function to update dashboard stats
+        function updateDashboard() {
+            document.getElementById("totalEvaluations").innerText = evaluations.length;
+
+            const avgCourseRating = (evaluations.reduce((sum, e) => sum + e.rating, 0) / evaluations.length).toFixed(1);
+            const avgInstructorRating = (evaluations.reduce((sum, e) => sum + e.instructor, 0) / evaluations.length).toFixed(1);
+
+            document.getElementById("avgCourseRating").innerText = avgCourseRating;
+            document.getElementById("avgInstructorRating").innerText = avgInstructorRating;
+            document.getElementById("participationRate").innerText = "85%"; // Example value
+        }
+        document.getElementById("feedbackBtn").addEventListener("click", function () {
+            window.location.href = "feedback.html"; //Redirect to the feedback page
+        });
+        // Set current year dynamically
+        document.getElementById("year").textContent = new Date().getFullYear(); 
+    </script>
+
+</body>
+
+</html>

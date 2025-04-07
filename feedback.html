@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Feedback</title>
+    <link rel="stylesheet" href="feedback.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="top-nav">
+        <div class="menu-icon" onclick="toggleSidebar()"> &#9776;</div>
+        <div class="logo">
+            <div class="logo-icon">CF</div>
+            <div class="logo-text">Course<span>Feedback</span></div>
+        </div>
+        <div class="top-links">
+            <a href="dashboard.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="login.html">Login</a>
+        </div>
+
+        <div class="user-menu">
+            <span id="Username">Username</span>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <a href="dashboard.html">Home</a>
+        <a href="feedback.html">Give Feedback</a>
+        <a href="profile.html">Profile</a>
+        <a href="about.html">About</a>
+        <a href="login.html">Login</a>
+
+    </div>
+    <div class="container">
+        <!--Feedback Form-->
+        <h2>Course Feedback Form</h2>
+        <form id="feedbackForm">
+            <input type="text" id="courseName" placeholder="Enter Course Code" required>
+
+            <input type="text" id="instructorName" placeholder="Enter Instructor Name" required>
+
+            <h3>Course Content</h3>
+            <label>How would you rate the quality of the course content?</label>
+            <select id="contentRating">
+                <option value="1">1 - Poor</option>
+                <option value="2">2 - Fair</option>
+                <option value="3">3 - Good</option>
+                <option value="4">4 - Very Good</option>
+                <option value="5">5 - Excellent</option>
+            </select>
+
+            <label>Was the course material well-structured and easy to understand?</label>
+            <select id="structureRating">
+                <option value="1">1 - Strongly Disagree</option>
+                <option value="2">2 - Disagree</option>
+                <option value="3">3 - Neutral</option>
+                <option value="4">4 - Agree</option>
+                <option value="5">5 - Strongly Agree</option>
+            </select>
+
+            <label>Was the course workload manageable?</label>
+            <select id="workloadRating">
+                <option value="1">1 - Too Heavy</option>
+                <option value="2">2 - Slightly Heavy</option>
+                <option value="3">3 - Balanced</option>
+                <option value="4">4 - Light</option>
+                <option value="5">5 - Very Light</option>
+            </select>
+
+            <h3>Instructor Evaluation</h3>
+            <label>How would you rate the instructor’s teaching quality?</label>
+            <select id="teachingRating">
+                <option value="1">1 - Poor</option>
+                <option value="2">2 - Fair</option>
+                <option value="3">3 - Good</option>
+                <option value="4">4 - Very Good</option>
+                <option value="5">5 - Excellent</option>
+            </select>
+
+            <label>Did the instructor explain concepts clearly?</label>
+            <select id="clarityRating">
+                <option value="1">1 - Strongly Disagree</option>
+                <option value="2">2 - Disagree</option>
+                <option value="3">3 - Neutral</option>
+                <option value="4">4 - Agree</option>
+                <option value="5">5 - Strongly Agree</option>
+            </select>
+
+            <label>Was the instructor responsive to student questions?</label>
+            <select id="responsivenessRating">
+                <option value="1">1 - Never</option>
+                <option value="2">2 - Rarely</option>
+                <option value="3">3 - Sometimes</option>
+                <option value="4">4 - Often</option>
+                <option value="5">5 - Always</option>
+            </select>
+
+            <label>How engaging were the lectures?</label>
+            <select id="engagementRating">
+                <option value="1">1 - Not Engaging</option>
+                <option value="2">2 - Slightly Engaging</option>
+                <option value="3">3 - Moderately Engaging</option>
+                <option value="4">4 - Very Engaging</option>
+                <option value="5">5 - Extremely Engaging</option>
+            </select>
+
+            <h3>Course Experience</h3>
+            <label>Did the assignments/projects help in understanding the course better?</label>
+            <select id="assignmentRating">
+                <option value="1">1 - Not at all</option>
+                <option value="2">2 - A little</option>
+                <option value="3">3 - Moderately</option>
+                <option value="4">4 - Very much</option>
+                <option value="5">5 - Extremely</option>
+            </select>
+
+            <label>How would you rate the availability of course resources (textbooks, slides, etc.)?</label>
+            <select id="resourcesRating">
+                <option value="1">1 - Poor</option>
+                <option value="2">2 - Fair</option>
+                <option value="3">3 - Good</option>
+                <option value="4">4 - Very Good</option>
+                <option value="5">5 - Excellent</option>
+            </select>
+
+            <label>Would you recommend this course to other students?</label>
+            <select id="recommendRating">
+                <option value="1">1 - No</option>
+                <option value="2">2 - Maybe</option>
+                <option value="3">3 - Yes</option>
+            </select>
+
+            <h3>Suggestions</h3>
+            <label>What improvements would you suggest for the course?</label>
+            <textarea id="suggestions" placeholder="Enter your suggestions..." required></textarea>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; <span id="year"></span> Course Feedback System. All rights reserved.</p>
+    </footer>
+    <script>
+        function toggleSidebar() {
+            const sidebar =
+                document.getElementById("sidebar");
+            sidebar.classList.toggle("active")
+        }
+        function logout() {
+            window.location.href = "login.html";
+        }
+        const params = new URLSearchParams(window.location.search);
+
+        document.getElementById("feedbackForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            alert("Thank you for your feedback!");
+            window.location.href = "dashboard.html";
+        });
+        // Set current year dynamically
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>

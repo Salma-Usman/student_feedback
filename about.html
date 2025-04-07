@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About - Course Feedback</title>
+    <link rel="stylesheet" href="about.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="top-nav">
+        <div class="menu-icon" onclick="toggleSidebar()"> &#9776;</div>
+        <div class="logo">
+            <div class="logo-icon">CF</div>
+            <div class="logo-text">Course<span>Feedback</span></div>
+        </div>
+        <div class="top-links">
+            <a href="dashboard.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="login.html">Login</a>
+        </div>
+
+        <div class="user-menu">
+            <span id="Username">Username</span>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <a href="dashboard.html">Home</a>
+        <a href="feedback.html">Give Feedback</a>
+        <a href="profile.html">Profile</a>
+        <a href="about.html">About</a>
+        <a href="login.html">Login</a>
+    </div>
+
+    <main class="about-section">
+        <h2>About This Platform</h2>
+        <p>
+            Our Course Feedback System allows students to express their opinions and rate the quality of
+            courses and teaching. This helps instructors and the university improve the learning experience.
+        </p>
+
+        <h3>Why Use This Platform?</h3>
+        <ul>
+            <li>Share honest feedback anonymously</li>
+            <li>Help improve teaching quality</li>
+            <li>Track course performance over time</li>
+        </ul>
+
+        <h3>Developed By</h3>
+        <p>Group W — Computer Science 200 Level, University of Abuja.</p>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Course Feedback System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar =
+                document.getElementById("sidebar");
+            sidebar.classList.toggle("active")
+        }
+        function logout() {
+            window.location.href = "login.html";
+        }
+        // Set current year dynamically
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>

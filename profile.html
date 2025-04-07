@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="top-nav">
+        <div class="menu-icon" onclick="toggleSidebar()"> &#9776;</div>
+        <div class="logo">
+            <div class="logo-icon">CF</div>
+            <div class="logo-text">Course<span>Feedback</span></div>
+        </div>
+        <div class="top-links">
+            <a href="dashboard.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="login.html">Login</a>
+        </div>
+
+        <div class="user-menu">
+            <span id="Username">Username</span>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <a href="dashboard.html">Home</a>
+        <a href="feedback.html">Give Feedback</a>
+        <a href="profile.html">Profile</a>
+        <a href="about.html">About</a>
+        <a href="login.html">Login</a>
+    </div>
+
+    <!-- Profile Settings -->
+    <div class="profile-container">
+        <h2>Profile Settings</h2>
+
+        <!-- Profile Picture Upload -->
+        <div class="profile-pic-container">
+            <img id="profilePic" src="default-avatar.png" alt="Profile Picture">
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <form id="profileForm">
+            <input type="text" id="Username" required placeholder="Username">
+            <input type="email" id="email" required placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; <span id="year"></span> Course Feedback System. All rights reserved.</p>
+    </footer>
+    <script>
+        function toggleSidebar() {
+            const sidebar =
+                document.getElementById("sidebar");
+            sidebar.classList.toggle("active")
+        }
+        // Load stored user data
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("userUsername")) {
+                document.getElementById("Username").value = localStorage.getItem("userUsername");
+                document.getElementById("email").value = localStorage.getItem("userEmail");
+            }
+
+            if (localStorage.getItem("profilePic")) {
+                document.getElementById("profilePic").src = localStorage.getItem("profilePic");
+            }
+        });
+
+        // Save profile changes
+        document.getElementById("profileForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const Username = document.getElementById("Username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (Username && email) {
+                localStorage.setItem("userUsername", Username);
+                localStorage.setItem("userEmail", email);
+                if (password) {
+                    localStorage.setItem("userPassword", password);
+                }
+
+                alert("Profile updated successfully!");
+            } else {
+                alert("Please fill in all required fields.");
+            }
+        });
+
+        // Profile Picture Upload
+        document.getElementById("fileInput").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("profilePic").src = e.target.result;
+                    localStorage.setItem("profilePic", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function logout() {
+            window.location.href = "login.html";
+        }
+        // Set current year dynamically
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+    </script>
+
+</body>
+
+</html>
