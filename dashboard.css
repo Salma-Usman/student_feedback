@@ -246,3 +246,33 @@ footer {
     margin-top: 40px;
     margin-bottom: 0px;
 }
+
+.course-dropdown {
+    text-align: center;
+    margin: 30px auto;
+    font-size: large;
+}
+
+.course-dropdown label {
+    font-size: 22px;
+    font-weight: 600;
+    margin-right: 10px;
+    color: royalblue;
+}
+
+.course-dropdown select {
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: 2px solid royalblue;
+    background-color: white;
+    color: darkblue;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    min-width: 200px;
+}
+
+.course-dropdown select:focus {
+    outline: none;
+    border-color: goldenrod;
+    box-shadow: 0 0 5px rgba(218, 165, 32, 0.6);
+}
