@@ -33,7 +33,7 @@
         <a href="feedback.html">Give Feedback</a>
         <a href="profile.html">Profile</a>
         <a href="about.html">About</a>
-        <a href="login.html">Login</a>
+        <a href="login.html">Log-out</a>
     </div>
 
     <!-- Profile Settings -->
@@ -47,7 +47,7 @@
         </div>
 
         <form id="profileForm">
-            <input type="text" id="Username" required placeholder="Username">
+            <input type="text" id="username" required placeholder="username">
             <input type="email" id="email" required placeholder="Email">
             <input type="password" id="password" placeholder="Password">
             <button type="submit">Save Changes</button>
@@ -78,9 +78,10 @@
         document.getElementById("profileForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
-            const Username = document.getElementById("Username").value;
+            const Username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
+            console.log(email)
 
             if (Username && email) {
                 localStorage.setItem("userUsername", Username);

@@ -32,7 +32,7 @@
         <a href="feedback.html">Give Feedback</a>
         <a href="profile.html">Profile</a>
         <a href="about.html">About</a>
-        <a href="login.html">Login</a>
+        <a href="login.html">Log-out</a>
 
     </div>
     <div class="container">
@@ -145,20 +145,68 @@
         <p>&copy; <span id="year"></span> Course Feedback System. All rights reserved.</p>
     </footer>
     <script>
-        function toggleSidebar() {
+        function toggleSidebar() 
+        {
             const sidebar =
                 document.getElementById("sidebar");
             sidebar.classList.toggle("active")
         }
-        function logout() {
+        function logout()
+         {
             window.location.href = "login.html";
         }
+        
+        function addFeedback(){
+            
+
+        const formData = new FormData();
+        formData.append("quality", document.getElementById("contentRating").value);
+        formData.append("material_structure_clarity", document.getElementById("structureRating").value);
+        formData.append("workload_manageability", document.getElementById("workloadRating").value);
+        formData.append("instructor_quality", document.getElementById("teachingRating").value);
+        formData.append("instructor_clarity", document.getElementById("clarityRating").value);
+        formData.append("instructor_responsive", document.getElementById("responsivenessRating").value);
+        formData.append("instructor_engagement", document.getElementById("engagementRating").value);
+        formData.append("resources_availabilty", document.getElementById("resourcesRating").value);
+        formData.append("assinment_impact", document.getElementById("assignmentRating").value);
+        formData.append("instructor_name", document.getElementById("instructorName").value);
+        
+        const recommendValue = document.getElementById("recommendRating").value;
+        const recommendText = recommendValue === "3" ? "yes" : recommendValue === "2" ? "maybe" : "no";
+        formData.append("course_recommendation", recommendText);
+
+        formData.append("suggestion", document.getElementById("suggestions").value);
+        formData.append("course_code", document.getElementById("courseName").value);
+
+        // Debug log (optional)
+        for (const pair of formData.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
+        }
+
+        // Send to backend
+        fetch("http://127.0.0.1:8000/addFeed", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Thank you for your feedback!");
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Submission failed. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong.");
+        });
+        }
+        
         const params = new URLSearchParams(window.location.search);
 
         document.getElementById("feedbackForm").addEventListener("submit", function (event) {
             event.preventDefault();
-            alert("Thank you for your feedback!");
-            window.location.href = "dashboard.html";
+            addFeedback();
         });
         // Set current year dynamically
         document.getElementById("year").textContent = new Date().getFullYear();

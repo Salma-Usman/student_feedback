@@ -20,11 +20,11 @@
         <div class="top-links">
             <a href="dashboard.html">Home</a>
             <a href="about.html">About</a>
-            <a href="login.html">Login</a>
+            
         </div>
 
         <div class="user-menu">
-            <span id="Username">Username</span>
+            <!-- <span id="Username">Username</span> -->
             <button onclick="logout()">Logout</button>
         </div>
     </div>
@@ -32,7 +32,7 @@
         <a href="dashboard.html">Home</a>
         <a href="feedback.html">Give Feedback</a>
         <a href="profile.html">Profile</a>
-        <a href="login.html">Login</a>
+        <a href="login.html">Log Out</a>
         <a href="about.html">About</a>
 
     </div>
@@ -107,6 +107,7 @@
     </footer>
 
     <script>
+        let stat = []
         function toggleSidebar() {
             const sidebar =
                 document.getElementById("sidebar");
@@ -116,19 +117,74 @@
             window.location.href = "login.html";
         }
         // Function to update dashboard stats
-        function updateDashboard() {
-            document.getElementById("totalEvaluations").innerText = evaluations.length;
+        function updateDashboard(){
+            fetch("http://127.0.0.1:8000/feed", {
+                method: "GET"
+            })
+            .then((response) => response.json())
+            .then((data)=>{
+                if(data.status === 200){
+                    let feedbackStat = data.data
+                    stat = feedbackStat
+                    let course_code = feedbackStat.map((element, index)=>element.course_code)
+                    const courseSelect = document.getElementById("course_code");
+                    courseSelect.innerHTML =''
+                    console.log(stat)
+                    course_code.forEach(code =>{
+                        const option = document.createElement("option");
+                        option.value = code;
+                        option.textContent = code;
+                        courseSelect.appendChild(option)
+                    })
+                    if(course_code.length > 0){
+                        updates(course_code[0])
+                    }
 
-            const avgCourseRating = (evaluations.reduce((sum, e) => sum + e.rating, 0) / evaluations.length).toFixed(1);
-            const avgInstructorRating = (evaluations.reduce((sum, e) => sum + e.instructor, 0) / evaluations.length).toFixed(1);
-
-            document.getElementById("avgCourseRating").innerText = avgCourseRating;
-            document.getElementById("avgInstructorRating").innerText = avgInstructorRating;
-            document.getElementById("participationRate").innerText = "85%"; // Example value
+                }
+                else{
+                    console.log(data.msg)
+                }
+            }).catch((error)=>{
+                console.log(error)
+            })
         }
-        document.getElementById("feedbackBtn").addEventListener("click", function () {
-            window.location.href = "feedback.html"; //Redirect to the feedback page
-        });
+       
+       
+        function updates(code){
+        //     instructor_quality_avg": 3.0,
+        // "instructor_clarity_avg": 3.0,
+        // "instructor_responsive_avg": 4.0,
+        // "instructor_engagement_avg": 1.0,
+        //     "quality_avg": 3.0,
+        // "structure_avg": 2.0,
+        // "workload_avg": 3.0,
+            if(stat.length <= 0)return
+            let current_stat = stat.find(stat=> stat.course_code === code)
+            let avgCourseRating = ((current_stat.quality_avg + current_stat.structure_avg +current_stat.workload_avg) / 3) / 5;
+
+            let avgInstructorRating = ((current_stat.instructor_quality_avg +
+            current_stat.instructor_clarity_avg + current_stat.instructor_engagement_avg+
+            current_stat.instructor_responsive_avg) / 4) / 5;
+
+            let participation_rate = ((current_stat.resources_availability_avg + current_stat.assignment_impact_avg) / 2 ) / 5;
+            console.log(stat.length)
+            document.getElementById("totalEvaluations").textContent = stat.length;
+            console.log("--------------------------------------------------")
+            document.getElementById("avgCourseRating").textContent = (avgCourseRating*100) + "%";
+            document.getElementById("avgInstructorRating").textContent =  (avgInstructorRating*100) + "%";
+            document.getElementById("participationRate").textContent = (participation_rate*100) + "%";
+                
+
+        }
+        document.addEventListener("DOMContentLoaded", function (){
+            document.getElementById("course_code").addEventListener("change", function () {
+                updates(this.value); 
+            });
+            updateDashboard()
+            document.getElementById("feedbackBtn").addEventListener("click", function () {
+            window.location.href = "feedback.html";
+            });
+        })
         // Set current year dynamically
         document.getElementById("year").textContent = new Date().getFullYear(); 
     </script>
