@@ -32,7 +32,47 @@
         <p>&copy; <span id="year"></span> Course Feedback System. All rights reserved.</p>
     </footer>
     <script>
+        function login(){
+            const formData = new FormData();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            formData.append("email", email);
+            formData.append("password", password);
+            fetch("http://127.0.0.1:8000/login", {
+                method: "POST",
+                body: formData,
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status === 200) {
+                    alert(data.msg); // "User Created Successfully"
+                    // You can redirect or reset the form here
+                    document.getElementById("loginForm").reset();
+                    window.location.href = "dashboard.html";
+                } else if (data.status === 401) {
+                    alert(data.msg); // "User Already "
+                    console.log("Password incorrect")
+                } else if (data.status === 404) {
+                    alert(`Error: ${data.msg}`);
+                    console.error("User Not found")
+                }else{
+                    alert(`Error: ${data.msg}`);
+                    console.error("Error", data.msg)
+                }
+
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("An error occurred while Logging In. Please try again later.");
+            });
+
+        }
+
+
         document.addEventListener("DOMContentLoaded", function () {
+            // Miss Salma THis was Added to Automatically input saved email 
+            // and saved password into the form instead of filling manually everytime
+            // just like how the browser saved your Github email and password when signing in.
             if (localStorage.getItem("rememberedEmail")) {
                 document.getElementById("email").value = localStorage.getItem("rememberedEmail");
                 document.getElementById("rememberMe").checked = true;
@@ -46,13 +86,16 @@
                 const rememberMe = document.getElementById("rememberMe").checked;
 
                 if (email && password) {
-                    if (rememberMe) {
+                    if (rememberMe)
+                     {
                         localStorage.setItem("rememberedEmail", email);
-                    } else {
+                    } 
+                    else
+                    {
                         localStorage.removeItem("rememberedEmail");
                     }
 
-                    window.location.href = "dashboard.html";
+                    login();
                 } else {
                     alert("Please enter valid credentials!");
                 }

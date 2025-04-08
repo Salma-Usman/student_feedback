@@ -37,6 +37,41 @@
             }
         }
 
+        // Function TO register the student 
+        function register() {
+
+            const formData = new FormData();
+            const username = document.getElementById("Username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            formData.append("username", username);
+            formData.append("email", email);
+            formData.append("password", password);
+
+            fetch("http://127.0.0.1:8000/register", {
+                method: "POST",
+                body: formData,
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status === 201) {
+                    alert(data.msg); // "User Created Successfully"
+                    // You can redirect or reset the form here
+                    document.getElementById("registerForm").reset();
+                    window.location.href = "login.html";
+                } else if (data.status === 409) {
+                    alert(data.msg); // "User Already Exist" or "Username Has been taken"
+                } else {
+                    alert(`Error: ${data.msg}`);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("An error occurred while registering. Please try again later.");
+            });
+}
+
         document.getElementById("registerForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
@@ -49,8 +84,8 @@
                 alert("Passwords do not match!");
                 return;
             }
-
-            window.location.href = "login.html";
+            register()
+            
         });
         // Set current year dynamically
         document.getElementById("year").textContent = new Date().getFullYear();
