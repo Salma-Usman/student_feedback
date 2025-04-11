@@ -20,11 +20,10 @@
         <div class="top-links">
             <a href="dashboard.html">Home</a>
             <a href="about.html">About</a>
-            <a href="login.html">Login</a>
         </div>
 
         <div class="user-menu">
-            <span id="Username">Username</span>
+            <!--<span id="Username">Username</span>-->
             <button onclick="logout()">Logout</button>
         </div>
     </div>
@@ -47,7 +46,7 @@
         </div>
 
         <form id="profileForm">
-            <input type="text" id="username" required placeholder="username">
+            <input type="text" id="Username" required placeholder="username">
             <input type="email" id="email" required placeholder="Email">
             <input type="password" id="password" placeholder="Password">
             <button type="submit">Save Changes</button>
@@ -78,7 +77,7 @@
         document.getElementById("profileForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
-            const Username = document.getElementById("username").value;
+            const Username = document.getElementById("Username").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             console.log(email)

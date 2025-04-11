@@ -70,9 +70,8 @@
 
 
         document.addEventListener("DOMContentLoaded", function () {
-            // Miss Salma THis was Added to Automatically input saved email 
+            // This was Added to Automatically input saved email 
             // and saved password into the form instead of filling manually everytime
-            // just like how the browser saved your Github email and password when signing in.
             if (localStorage.getItem("rememberedEmail")) {
                 document.getElementById("email").value = localStorage.getItem("rememberedEmail");
                 document.getElementById("rememberMe").checked = true;
